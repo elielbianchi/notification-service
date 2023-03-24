@@ -9,10 +9,11 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(notification: Notification): Promise<void> {
-    const raw = PrismaNotificationMapper.toPrisma(notification);
+    const prismaNotificationData =
+      PrismaNotificationMapper.toPrisma(notification);
 
     await this.prisma.notification.create({
-      data: raw,
+      data: prismaNotificationData,
     });
   }
 
@@ -51,13 +52,14 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
   }
 
   async save(notification: Notification): Promise<void> {
-    const raw = PrismaNotificationMapper.toPrisma(notification);
+    const prismaNotificationData =
+      PrismaNotificationMapper.toPrisma(notification);
 
     await this.prisma.notification.update({
       where: {
-        id: raw.id,
+        id: prismaNotificationData.id,
       },
-      data: raw,
+      data: prismaNotificationData,
     });
   }
 }
